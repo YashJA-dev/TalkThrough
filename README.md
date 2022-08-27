@@ -1,7 +1,5 @@
 # talkthrough
 
-Talk Through
-
-## About
+# About
 
 Flutter Application which helps users to organize meatings 
