@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1089749625426",
+    "project_id": "talkthrough-7ad4b",
+    "storage_bucket": "talkthrough-7ad4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089749625426:android:d7fcb031af27d58af9cd8b",
+        "android_client_info": {
+          "package_name": "com.example.talkthrough"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089749625426-d6gua9eu59nbsa221dq6s8o72eesd6b8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkArEGLfY71QJrCJ6_T6XTbsxCu938u5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089749625426-d6gua9eu59nbsa221dq6s8o72eesd6b8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
