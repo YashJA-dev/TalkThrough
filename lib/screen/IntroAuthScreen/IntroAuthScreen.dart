@@ -6,7 +6,7 @@ import '../NavigationAuthScreen.dart/NavigationAutthScreen.dart';
 import 'IntroPageData.dart';
 
 class IntroAuthScreen extends StatelessWidget {
-  double buttonSize=21;
+  double buttonSize=21    ;
   
   @override
   Widget build(BuildContext context) {

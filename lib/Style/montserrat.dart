@@ -11,3 +11,14 @@ TextStyle montserratStyle(
     fontWeight: fontWeight,
   );
 }
+TextStyle damion(
+    {required double size,
+    FontWeight fontWeight = FontWeight.w700,
+    Color color = Colors.black}){
+ return GoogleFonts.damion(
+    fontSize: size,
+    color: color,
+    fontWeight: fontWeight,
+  );
+    
+}

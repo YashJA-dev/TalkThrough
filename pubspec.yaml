@@ -29,6 +29,7 @@ dependencies:
   jitsi_meet:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
+  provider: ^6.0.3
 
 
 
