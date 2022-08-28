@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'screen/HomeScreen.dart';
+import 'screen/IntroAuthScreen/IntroAuthScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,23 +16,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        appBar: AppBar(title: Text("Talk")),
-        body: Home(),
-      ),
+      home: NavigationPage(),
     );
   }
 }
-
-class Home extends StatelessWidget {
-  const Home({super.key});
-
+class NavigationPage extends StatelessWidget {
+  bool isSigned=false;
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return isSigned?HomeScreen():IntroAuthScreen();
   }
 }
