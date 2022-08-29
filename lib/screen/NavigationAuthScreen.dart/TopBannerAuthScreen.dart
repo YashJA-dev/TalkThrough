@@ -14,11 +14,12 @@ class TopBannerAuthScreen extends StatelessWidget {
     double width = size.width;
 
     return Container(
-      height: 350,
+      height: size.height,
       width: width,
       decoration:
           BoxDecoration(gradient: LinearGradient(colors: GradientColors.blue)),
-      alignment: Alignment.center,
+      alignment: Alignment.topCenter,
+      padding: EdgeInsets.only(top: size.height*0.20),
       child: AnimatedDefaultTextStyle(
         curve: Curves.easeInOut,
         duration: Duration(milliseconds: 400),

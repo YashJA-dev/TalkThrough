@@ -27,18 +27,17 @@ class _LoginSectionState extends State<LoginSection> {
   Widget build(BuildContext context) {
     AuthScreenProvider authScreen = Provider.of<AuthScreenProvider>(context);
     bool login = authScreen.login;
-
+    var mediaquery=MediaQuery.of(context);
+    double height=mediaquery.size.height*0.6;
     return Container(
-      padding: EdgeInsets.only(left:20,right: 20,bottom: 20,top: 2),
+      padding: EdgeInsets.only(left:20,right: 20,bottom: 60,top: 2),
       alignment: Alignment.center,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text("Login",style: montserratStyle(size: 15,fontWeight: FontWeight.w700),),
-          SizedBox(height:40),
           buildEmailField(),
-          SizedBox(height: 40),
           buildPassWordField(),
-          SizedBox(height: 40),
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -58,9 +57,6 @@ class _LoginSectionState extends State<LoginSection> {
                 ),
               )
             ],
-          ),
-          SizedBox(
-            height: 20,
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
