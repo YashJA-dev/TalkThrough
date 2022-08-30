@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
 import '../../Providers/AuthScreenProvider.dart';
 import '../../Style/montserrat.dart';
+import '../../main.dart';
+import '../meetingSheduleScreen/meetingSheduleScreen.dart';
 
 class SignUpSection extends StatefulWidget {
   @override
@@ -22,7 +25,9 @@ class _SignUpSectionState extends State<SignUpSection> {
       setState(() {});
     });
   }
-
+  
+  String? _email_err = null;
+  String? _pass_err = null;
   @override
   Widget build(BuildContext context) {
     AuthScreenProvider authScreen = Provider.of<AuthScreenProvider>(context);
@@ -68,16 +73,64 @@ class _SignUpSectionState extends State<SignUpSection> {
                       ),
                       elevation: 15.0,
                     ),
-                    onPressed: () {},
+                    onPressed: () async{
+                       showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          });
+                      String signin = await sigUp_controller(
+                          email: email.text.trim(),
+                          password: password.text.trim());
+                      if (signin == "1") {
+                        _pass_err = "Value Can\'t Be Empty";
+                        navigatorKey.currentState!
+                            .popUntil((route) => route.isFirst);
+                      } else if (signin == "0") {
+                        _email_err = "Value Can\'t Be Empty";
+                        navigatorKey.currentState!
+                            .popUntil((route) => route.isFirst);
+                      } else if (signin == "01") {
+                        _pass_err = "Value Can\'t Be Empty";
+                        _email_err = "Value Can\'t Be Empty";
+                        navigatorKey.currentState!
+                            .popUntil((route) => route.isFirst);
+                      } else if (signin == "Successfully") {
+                        _email_err = null;
+                        _pass_err = null;
+                        email.text = "";
+                        password.text = "";
+                          Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                MeetingSheduleScreen(),
+                          ),
+                          (route) =>
+                              false, //if you want to disable back feature set to false
+                        );
+                      } else {
+                        _email_err = signin;
+                        _pass_err = signin;
+                        navigatorKey.currentState!
+                            .popUntil((route) => route.isFirst);
+                      }
+
+                      setState(() {
+                        _email_err;
+                        _pass_err;
+                      });
+
+                    },
                     child: Text("Sign Up"),
                   ),
                 ),
               )
             ],
           ),
-          // SizedBox(
-          //   height: 20,
-          // ),
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -111,6 +164,7 @@ class _SignUpSectionState extends State<SignUpSection> {
       decoration: InputDecoration(
           labelText: "Email",
           hintText: "name@example.com",
+          errorText: _email_err,
           prefixIcon: Icon(Icons.mail),
           suffixIcon: email.text.isEmpty
               ? Container(
@@ -131,6 +185,7 @@ class _SignUpSectionState extends State<SignUpSection> {
       controller: password,
       decoration: InputDecoration(
           labelText: "Password",
+          errorText: _pass_err,
           suffixIcon: IconButton(
             icon:
                 Icon(passwordVisible ? Icons.visibility_off : Icons.visibility),

@@ -6,32 +6,51 @@ import '../NavigationAuthScreen.dart/NavigationAutthScreen.dart';
 import 'IntroPageData.dart';
 
 class IntroAuthScreen extends StatelessWidget {
-  double buttonSize=21    ;
-  
+  double buttonSize = 21;
+
   @override
   Widget build(BuildContext context) {
-        List<IntroPageData> pageData =formListContent();
-    Color primaryColor=Theme.of(context).primaryColor;
+    List<IntroPageData> pageData = formListContent();
+    Color primaryColor = Theme.of(context).primaryColor;
     return IntroductionScreen(
       pages: buildPageViewModels(pageData: pageData),
       onDone: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>NavigationAutthScreen()));
+        Navigator.pushAndRemoveUntil<dynamic>(
+          context,
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => NavigationAutthScreen(),
+          ),
+          (route) => false, //if you want to disable back feature set to false
+        );
+        
       },
       onSkip: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>NavigationAutthScreen()));
+        Navigator.pushAndRemoveUntil<dynamic>(
+          context,
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => NavigationAutthScreen(),
+          ),
+          (route) => false, //if you want to disable back feature set to false
+        );
       },
       showDoneButton: true,
       showSkipButton: true,
       showNextButton: true,
       next: Text("Next",
           style: montserratStyle(
-              size: buttonSize, fontWeight: FontWeight.w700, color: primaryColor)),
+              size: buttonSize,
+              fontWeight: FontWeight.w700,
+              color: primaryColor)),
       done: Text("Done",
           style: montserratStyle(
-              size: buttonSize, fontWeight: FontWeight.w700, color: primaryColor)),
+              size: buttonSize,
+              fontWeight: FontWeight.w700,
+              color: primaryColor)),
       skip: Text("Skip",
           style: montserratStyle(
-              size: buttonSize, fontWeight: FontWeight.w700, color:primaryColor)),
+              size: buttonSize,
+              fontWeight: FontWeight.w700,
+              color: primaryColor)),
     );
   }
 
@@ -48,7 +67,8 @@ class IntroAuthScreen extends StatelessWidget {
               size: 20,
               color: Colors.black,
             ),
-            titleTextStyle: montserratStyle(size: 25, color: Color.fromARGB(255, 59, 58, 58))),
+            titleTextStyle: montserratStyle(
+                size: 25, color: Color.fromARGB(255, 59, 58, 58))),
       );
       pages.add(pageViewModel);
     }
@@ -57,7 +77,7 @@ class IntroAuthScreen extends StatelessWidget {
 
   List<IntroPageData> formListContent() {
     List<IntroPageData> pageData = [];
-    double imageHeight=170;
+    double imageHeight = 170;
     //welcome screen
     pageData.add(
       new IntroPageData(
