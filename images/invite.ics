@@ -1,0 +1,74 @@
+BEGIN:VCALENDAR
+METHOD:REQUEST
+PRODID:Microsoft Exchange Server 2010
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:India Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ORGANIZER;CN=Abhishek Kumar Sah:mailto:Abhishek.Sah@aajtak.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Yash Gupta
+ :mailto:yash13203@gmail.com
+DESCRIPTION;LANGUAGE=en-US:Event Name: India Today Interview\n\nInterview f
+ or the profile of Software Development at India Today Group\n\nLocation: h
+ ttps://meet.google.com/awb-mrub-sxr\n\nNeed to make changes to this event?
+ \nCancel: https://calendly.com/cancellations/b6ffe757-94de-44d7-9f13-98366
+ 45fc1cf\nReschedule: https://calendly.com/reschedulings/b6ffe757-94de-44d7
+ -9f13-9836645fc1cf\n\nPowered by Calendly https://calendly.com/\n_________
+ _______________________\n“This e-mail transmission and any documents\, f
+ iles\, or previous e-mail messages appended or attached to it may contain 
+ information that is confidential or privileged. If you are not the intende
+ d recipient\, or a person responsible for delivering it to the intended re
+ cipient\, you are hereby notified that any disclosure\,copying\, printing\
+ , distribution\, or use of the information contained or attached to this t
+ ransmission is STRICTLY PROHIBITED. If you have received this transmission
+  in error\, please immediately notify the sender by return e-mail message 
+ and delete the original transmission\, its attachments\, and any copies in
+  your possession\, custody or control. TV Today Network Ltd. accepts no li
+ ability for loss or damage caused by software viruses and you are advised 
+ to carry out a virus check on any attachments contained in this message.
+ ”\n
+UID:040000008200E00074C5B7101A82E00800000000DC8AB3D90FBDD801000000000000000
+ 01000000069DC4DC36E55D0448D9E48BB3B0AB659
+SUMMARY;LANGUAGE=en-US:Yash Gupta and AKS Aajtak
+DTSTART;TZID=India Standard Time:20220901T143000
+DTEND;TZID=India Standard Time:20220901T153000
+CLASS:PUBLIC
+PRIORITY:5
+DTSTAMP:20220831T080118Z
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+SEQUENCE:0
+LOCATION;LANGUAGE=en-US:https://meet.google.com/awb-mrub-sxr
+X-MICROSOFT-CDO-APPT-SEQUENCE:0
+X-MICROSOFT-CDO-OWNERAPPTID:2120810460
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-LOCATIONDISPLAYNAME:https://meet.google.com/awb-mrub-sxr
+X-MICROSOFT-LOCATIONSOURCE:None
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"https://meet.google.com/awb-mrub-sxr
+ "\,"LocationAnnotation":""\,"LocationUri":""\,"LocationStreet":""\,"Locati
+ onCity":""\,"LocationState":""\,"LocationCountry":""\,"LocationPostalCode"
+ :""\,"LocationFullAddress":""}]
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR

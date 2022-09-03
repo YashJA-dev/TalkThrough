@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:talkthrough/screen/controller/FirebaseConst.dart';
 
 Future<String> sigIn_controller({required String email,required String password})async {
   String output="Successfully";
@@ -17,8 +18,17 @@ Future<String> sigUp_controller({required String email,required String password}
   if(email==""&&password=="")return "01";
   else if(email=="")return "0";
   else if(password=="")return "1";
+  else if(password.length<=7)return "PassWord length less then 8";
   try{
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((signedUser)async {
+      await userCollection.doc(signedUser.user!.uid).set({
+        "email":email,
+        "password" :password,
+        "uid":signedUser.user!.uid,
+        "username": "user name",
+      });
+    });
+    // .then((signed)
   }on FirebaseAuthException catch(ex){
     output=_getMessageFromErrorCode(ex);
   }
