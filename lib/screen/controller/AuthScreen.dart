@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:talkthrough/screen/controller/FirebaseConst.dart';
+
+import '../NavigationAuthScreen.dart/NavigationAutthScreen.dart';
 
 Future<String> sigIn_controller({required String email,required String password})async {
   String output="Successfully";
@@ -33,6 +36,16 @@ Future<String> sigUp_controller({required String email,required String password}
     output=_getMessageFromErrorCode(ex);
   }
   return output;
+}
+void logout({required BuildContext context}){
+  FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+      builder: (BuildContext context) => NavigationAutthScreen(),
+    ),
+    (route) => false, //if you want to disable back feature set to false
+  );
 }
  String _getMessageFromErrorCode(FirebaseAuthException exception) {
     switch (exception.code) {

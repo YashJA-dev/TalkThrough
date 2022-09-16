@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.dart';
 
 import '../../Providers/AuthScreenProvider.dart';
 import '../../main.dart';
 import '../controller/AuthScreen.dart';
-import '../meetingSheduleScreen/meetingSheduleScreen.dart';
 
 class LoginSection extends StatefulWidget {
   @override
@@ -168,6 +168,7 @@ class _LoginSectionState extends State<LoginSection> {
     String signin = await sigIn_controller(
         email: email.text.trim(),
         password: password.text.trim());
+        print(signin);
     if (signin == "1") {
       _pass_err = "Value Can\'t Be Empty";
       navigatorKey.currentState!
@@ -190,7 +191,7 @@ class _LoginSectionState extends State<LoginSection> {
         context,
         MaterialPageRoute<dynamic>(
           builder: (BuildContext context) =>
-              MeetingSheduleScreen(),
+              TalkThrewHolderScreen(),
         ),
         (route) =>
             false, //if you want to disable back feature set to false

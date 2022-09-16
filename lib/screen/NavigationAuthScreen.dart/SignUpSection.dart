@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.dart';
 import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
 import '../../Providers/AuthScreenProvider.dart';
 import '../../Style/montserrat.dart';
 import '../../main.dart';
-import '../meetingSheduleScreen/meetingSheduleScreen.dart';
 
 class SignUpSection extends StatefulWidget {
   @override
@@ -156,7 +156,7 @@ class _SignUpSectionState extends State<SignUpSection> {
       Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => MeetingSheduleScreen(),
+          builder: (BuildContext context) => TalkThrewHolderScreen(),
         ),
         (route) => false, //if you want to disable back feature set to false
       );

@@ -17,7 +17,7 @@ class TopBannerAuthScreen extends StatelessWidget {
       height: size.height,
       width: width,
       decoration:
-          BoxDecoration(gradient: LinearGradient(colors: GradientColors.blue)),
+          BoxDecoration(gradient: LinearGradient(colors: GradientColors.violet)),
       alignment: Alignment.topCenter,
       padding: EdgeInsets.only(top: size.height*0.20),
       child: AnimatedDefaultTextStyle(

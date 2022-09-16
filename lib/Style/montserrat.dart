@@ -19,6 +19,15 @@ TextStyle damion(
     fontSize: size,
     color: color,
     fontWeight: fontWeight,
-  );
-    
+  ); 
+}
+TextStyle jost(
+    {required double size,
+    FontWeight fontWeight = FontWeight.w700,
+    Color color = Colors.black}){
+ return GoogleFonts.jost(
+    fontSize: size,
+    color: color,
+    fontWeight: fontWeight,
+  ); 
 }

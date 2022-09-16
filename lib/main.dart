@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.dart';
 import 'firebase_options.dart';
 import 'screen/IntroAuthScreen/IntroAuthScreen.dart';
-import 'screen/meetingSheduleScreen/meetingSheduleScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue, accentColor: Colors.black),
+      theme: ThemeData(primarySwatch: Colors.indigo, accentColor: Colors.black),
       home:   NavigationPage(),
     );
   }
@@ -44,7 +44,7 @@ class NavigationPage extends StatelessWidget {
     // );
     return Scaffold(
       
-      body: isSigned?MeetingSheduleScreen():IntroAuthScreen());
+      body: isSigned?TalkThrewHolderScreen():IntroAuthScreen());
   }
   
 }
