@@ -13,23 +13,26 @@ void main() async {
   runApp(MyApp());
 }
 
-final navigatorKey=GlobalKey<NavigatorState>();
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
- 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.indigo, accentColor: Colors.black),
-      home:   NavigationPage(),
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+        accentColor: Colors.black,
+      ),
+      home: NavigationPage(),
     );
   }
 }
 
 class NavigationPage extends StatelessWidget {
-  bool isSigned =FirebaseAuth.instance.currentUser!=null;
+  bool isSigned = FirebaseAuth.instance.currentUser != null;
   @override
   Widget build(BuildContext context) {
     // return StreamBuilder<User?>(
@@ -43,8 +46,6 @@ class NavigationPage extends StatelessWidget {
     //   },
     // );
     return Scaffold(
-      
-      body: isSigned?TalkThrewHolderScreen():IntroAuthScreen());
+        body: isSigned ? TalkThrewHolderScreen() : IntroAuthScreen());
   }
-  
 }

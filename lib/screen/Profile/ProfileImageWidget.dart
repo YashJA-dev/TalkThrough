@@ -36,7 +36,7 @@ class ProfileImageWidget extends StatelessWidget {
             width: 1,
           ),
           Container(
-            padding: EdgeInsets.only(left: 35,bottom: 20),
+            padding: EdgeInsets.only(left: 35, bottom: 20),
             // decoration: BoxDecoration(color: Colors.red),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -60,18 +60,18 @@ class ProfileImageWidget extends StatelessWidget {
                         color: Colors.white),
                     children: [
                       TextSpan(
-                          text: " mon ago",
-                          style: jost(
-                              size: 15,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.white))
+                        text: " mon ago",
+                        style: jost(
+                            size: 15,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.white),
+                      ),
                     ],
                   ),
-                  // strutStyle: ,
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
