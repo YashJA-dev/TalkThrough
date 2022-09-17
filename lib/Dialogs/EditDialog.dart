@@ -6,18 +6,19 @@ import 'package:talkthrough/screen/Profile/Profile.dart';
 import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
 import '../Style/montserrat.dart';
+import 'SnackBar.dart';
 
 Future<void> editDialog({
-  required BuildContext context,
+  required BuildContext buildcontext,
   required String title,
   required profileInfoProvider,
 }) async {
   TextEditingController controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   return showDialog<void>(
-    context: context,
+    context: buildcontext,
     barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
+    builder: (BuildContext bcontext) {
       return AlertDialog(
         title: Text(title),
         content: SingleChildScrollView(
@@ -50,7 +51,7 @@ Future<void> editDialog({
           TextButton(
             child: const Text('Cancel'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(buildcontext).pop();
             },
           ),
           TextButton(
@@ -58,23 +59,23 @@ Future<void> editDialog({
             onPressed: () async {
               bool valid = _formKey.currentState!.validate();
               if (valid) {
-                Navigator.of(context).pop();
+                Navigator.of(buildcontext).pop();
                 BuildContext? dialogContext;
                 showDialog(
-                  context: context,
+                  context: buildcontext,
                   builder: (buildcontext) {
-                    dialogContext=buildcontext;
+                    dialogContext = buildcontext;
                     return LoadingDialog(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height);
+                        width: MediaQuery.of(buildcontext).size.width,
+                        height: MediaQuery.of(buildcontext).size.height);
                   },
                 );
                 bool response = await updateUserName(userName: controller.text);
-                if(response){
-                  profileInfoProvider.setusername=controller.text;
-                  print("updated");
-                }else{
-                  print("NetworkPeoblem");
+                if (response) {
+                  profileInfoProvider.setusername = controller.text;
+                  showSnackMsg(context: buildcontext,msg: "Updated..");
+                } else {
+                  showSnackMsg(context: buildcontext,msg: "Network Problem Try Again");
                 }
                 Navigator.pop(dialogContext!);
               }

@@ -68,7 +68,7 @@ class Profile extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: FlatButton.icon(
                   onPressed: () {
-                    editDialog(context: context, title: "Enter New User Name",profileInfoProvider: profileInfo);
+                    editDialog(buildcontext: context, title: "Enter New User Name",profileInfoProvider: profileInfo);
                   },
                   icon: Icon(Icons.edit),
                   label: Text("Edit User Name"),
