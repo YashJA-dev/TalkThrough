@@ -22,14 +22,17 @@ class _TalkThrewHolderScreenState extends State<TalkThrewHolderScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
   late ProfileInfoProvider profileInfoProvider;
+  late DateTime now;
+
   @override
   void initState() {
     super.initState();
+    now = new DateTime.now();
     profileInfoProvider = ProfileInfoProvider(
         id: "Loading..",
         username: "Loading..",
         email: "Loading..",
-        date: "Loading..");
+        date: new DateTime(now.year, now.month, now.day).toString(),);
     _pageController = PageController();
   }
 
@@ -47,11 +50,12 @@ class _TalkThrewHolderScreenState extends State<TalkThrewHolderScreen> {
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           var userInfo;
           if (snapshot.hasError) {
+            print(snapshot.error);
             userInfo = {
               "username": "Net Unstable",
               "email": "Net Unstable",
               "id": "Net Unstable",
-              "date": "Net Unstable",
+              "date": new DateTime(now.year, now.month, now.day).toString(),
             };
           } else if (snapshot.connectionState == ConnectionState.done) {
             userInfo = snapshot.data!.data() as Map<String, dynamic>;
@@ -60,26 +64,25 @@ class _TalkThrewHolderScreenState extends State<TalkThrewHolderScreen> {
               "username": "Loading..",
               "email": "Loading..",
               "id": "Loading..",
-              "date": "Loading..",
+              "date": new DateTime(now.year, now.month, now.day).toString(),
             };
           }
-          if ("Loading.." == profileInfoProvider.username &&
-              userInfo["username"] != "Loading..") {
+          if (userInfo["username"] != "Loading..") {
             profileInfoProvider.usernameNotNotify = userInfo["username"];
           }
 
-          if ("Loading.." == profileInfoProvider.email &&
-              userInfo["email"] != "Loading..") {
+          if (userInfo["email"] != "Loading..") {
             profileInfoProvider.emailNotNotify = userInfo["email"];
           }
-          if ("Loading.." == profileInfoProvider.id &&
-              userInfo["id"] != "Loading..")
+          if (userInfo["id"] != "Loading..") {
             profileInfoProvider.idNotNotify = userInfo["id"];
-          if ("Loading.." == profileInfoProvider.date &&
-              userInfo["date"] != "Loading..")
+          }
+          if (userInfo["date"] != "Loading..") {
             profileInfoProvider.dateNotNotify = userInfo["date"];
+          }
 
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             body: ChangeNotifierProvider(
               create: (_) => profileInfoProvider,
               child: SizedBox.expand(

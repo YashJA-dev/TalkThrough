@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
 import 'package:talkthrough/Style/montserrat.dart';
 
 class ProfileImageWidget extends StatelessWidget {
@@ -11,6 +14,9 @@ class ProfileImageWidget extends StatelessWidget {
     double height = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
+
+
+    ProfileInfoProvider profileInfoProvider=Provider.of<ProfileInfoProvider>(context);
     return Container(
       width: width,
       height: height * 0.15,
@@ -51,24 +57,20 @@ class ProfileImageWidget extends StatelessWidget {
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 10),
-                RichText(
-                  text: TextSpan(
-                    text: "6",
-                    style: jost(
-                        size: 15,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
-                    children: [
-                      TextSpan(
-                        text: " mon ago",
-                        style: jost(
-                            size: 15,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.white),
-                      ),
-                    ],
+                SizedBox(
+                  height: height * 0.03,
+                  width: width * 0.2,
+                  child: FittedBox(
+                    child: Text(
+                      
+                      DateFormat('yyyy-MM-dd').format(DateTime.parse(profileInfoProvider.date)),
+                      style: jost(
+                          size: height * 0.07,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
                   ),
-                )
+                ),
               ],
             ),
           ),

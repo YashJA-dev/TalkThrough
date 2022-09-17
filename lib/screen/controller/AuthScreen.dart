@@ -59,6 +59,24 @@ Future<DocumentSnapshot<Object?>> userData() async {
   return await userCollection.doc(user!.uid).get();
 }
 
+Future<bool> updateId({required String code}) async{
+  try{
+    final user = FirebaseAuth.instance.currentUser;
+    await userCollection.doc(user!.uid).update({'id': code});
+  }on FirebaseException catch(ex){
+    return false;
+  }
+  return true;
+}
+Future<bool> updateUserName({required String userName}) async{
+  try{
+    final user = FirebaseAuth.instance.currentUser;
+    await userCollection.doc(user!.uid).update({'username': userName});
+  }on FirebaseException catch(ex){
+    return false;
+  }
+  return true;
+}
 void logout({required BuildContext context}) {
   FirebaseAuth.instance.signOut();
   Navigator.pushAndRemoveUntil<dynamic>(

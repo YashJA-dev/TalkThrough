@@ -35,17 +35,6 @@ class NavigationPage extends StatelessWidget {
   bool isSigned = FirebaseAuth.instance.currentUser != null;
   @override
   Widget build(BuildContext context) {
-    // return StreamBuilder<User?>(
-    //   stream: FirebaseAuth.instance.authStateChanges(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData) {
-    //       return MeetingSheduleScreen();
-    //     } else {
-    //       return IntroAuthScreen();
-    //     }
-    //   },
-    // );
-    return Scaffold(
-        body: isSigned ? TalkThrewHolderScreen() : IntroAuthScreen());
+    return isSigned ? TalkThrewHolderScreen() : IntroAuthScreen();
   }
 }

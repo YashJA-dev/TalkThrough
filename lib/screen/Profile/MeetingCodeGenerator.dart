@@ -5,6 +5,8 @@ import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
 import 'package:talkthrough/Style/montserrat.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../Dialogs/LoadingDialog.dart';
+
 class MeetingCodeGenerator extends StatelessWidget {
   const MeetingCodeGenerator({Key? key}) : super(key: key);
 
@@ -14,6 +16,7 @@ class MeetingCodeGenerator extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     ProfileInfoProvider profileInfoProvider =
         Provider.of<ProfileInfoProvider>(context);
+    late BuildContext? _dialogContext;
     return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -43,9 +46,22 @@ class MeetingCodeGenerator extends StatelessWidget {
                   "Generate New Meeting Code",
                   style: TextStyle(color: Colors.black),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   String code = Uuid().v1().substring(0, 6);
-                  profileInfoProvider.setid = code;
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      _dialogContext = context;
+                      return LoadingDialog(width: width,height:height);
+                    },
+                  );
+                  bool response = await profileInfoProvider.setid(code);
+                  Navigator.pop(_dialogContext!);
+                  if (response) {
+                    print("updated");
+                  } else {
+                    print("networkProblem");
+                  }
                 },
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(5),

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
 class ProfileInfoProvider extends ChangeNotifier {
   String _username;
@@ -26,14 +27,17 @@ class ProfileInfoProvider extends ChangeNotifier {
 
   set setusername(String value) {
     this._username = value;
+    
     notifyListeners();
   }
 
   get id => this._id;
 
-  set setid(value) {
-    this._id = value;
-    notifyListeners();
+  Future<bool> setid(code) async{
+    this._id = code;
+    bool response=await updateId(code: code);   
+    if(response)notifyListeners();
+    return response;
   }
 
   set usernameNotNotify(String value) {

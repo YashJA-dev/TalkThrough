@@ -9,8 +9,8 @@ class Meeting extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    return Scaffold(
-      body: Center(
+    return Container(
+      child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
