@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkthrough/Style/montserrat.dart';
 import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.dart';
+import 'package:talkthrough/screen/controller/ConstantMethods.dart';
 
 import '../../Providers/AuthScreenProvider.dart';
 import '../../main.dart';
@@ -14,6 +15,8 @@ class LoginSection extends StatefulWidget {
   State<LoginSection> createState() => _LoginSectionState();
 }
 
+final _loginFormKey = GlobalKey<FormState>();
+
 class _LoginSectionState extends State<LoginSection> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -22,13 +25,14 @@ class _LoginSectionState extends State<LoginSection> {
   AuthScreenProvider? authScreen;
   String? _email_err = null;
   String? _pass_err = null;
-  
-  @override
-  void dispose() {
-    super.dispose();
-    email.dispose();
-    password.dispose();
-  }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   email.dispose();
+  //   // print("dispose");
+  //   password.dispose();
+  // }
 
   @override
   void initState() {
@@ -48,22 +52,24 @@ class _LoginSectionState extends State<LoginSection> {
     return Container(
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 60, top: 2),
       alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildLoginText(),
-          buildEmailField(),
-          buildPassWordField(),
-          buildLoginButton(),
-          buildSignUpButton(),    
-        ],
+      child: Form(
+        key: _loginFormKey,
+        autovalidateMode: AutovalidateMode.always,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildLoginText(),
+            buildEmailField(),
+            buildPassWordField(),
+            buildLoginButton(),
+            buildSignUpButton(),
+          ],
+        ),
       ),
     );
   }
 
-
-
-  Widget buildSignUpButton(){
+  Widget buildSignUpButton() {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -86,32 +92,57 @@ class _LoginSectionState extends State<LoginSection> {
       ],
     );
   }
+
   Widget buildEmailField() {
-    return TextField(
+    return TextFormField(
       controller: email,
+      validator: (str) {
+        int length = str!.length;
+        if(length==0)return "Email can't be empty";
+        else if (!isEmail(email: str)) return "Enter a Valid Email";
+      },
       keyboardType: TextInputType.emailAddress,
+      onChanged: (_) {
+        _email_err = null;
+        setState(() {
+          _email_err;
+        });
+      },
       decoration: InputDecoration(
-          labelText: "Email",
-          hintText: "name@example.com",
-          errorText: _email_err,
-          prefixIcon: Icon(Icons.mail),
-          suffixIcon: email.text.isEmpty
-              ? Container(
-                  width: 0,
-                )
-              : IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    email.clear();
-                  },
-                ),
-          border: OutlineInputBorder()),
+        labelText: "Email",
+        hintText: "name@example.com",
+        errorText: _email_err,
+        prefixIcon: Icon(Icons.mail),
+        suffixIcon: email.text.isEmpty
+            ? Container(
+                width: 0,
+              )
+            : IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  email.clear();
+                },
+              ),
+        border: OutlineInputBorder(),
+      ),
     );
   }
 
   Widget buildPassWordField() {
-    return TextField(
+    return TextFormField(
       controller: password,
+      validator: (str) {
+        int length = str!.length;
+        if (length == 0) return "Password can't be empty";
+        else if(length<=8)return "Password should be of length greater then 8";
+
+      },
+      onChanged: (_) {
+        _pass_err = null;
+        setState(() {
+          _pass_err;
+        });
+      },
       decoration: InputDecoration(
           labelText: "Password",
           errorText: _pass_err,
@@ -129,33 +160,37 @@ class _LoginSectionState extends State<LoginSection> {
           border: OutlineInputBorder()),
       obscureText: passwordVisible,
     );
-
   }
+
   buildLoginButton() {
     return Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            child: Container(
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  elevation: 15.0,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: Container(
+            height: 50,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
                 ),
-                onPressed: () async {
-                  loginProcess();
-                },
-                child: Text("Log in"),
+                elevation: 15.0,
               ),
+              onPressed: () async {
+                bool validation = _loginFormKey.currentState!.validate();
+                if (validation) {
+                  loginProcess();
+                }
+              },
+              child: Text("Log in"),
             ),
-          )
-        ],
-      );
-    }
-  void loginProcess()async {
+          ),
+        )
+      ],
+    );
+  }
+
+  void loginProcess() async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -166,41 +201,23 @@ class _LoginSectionState extends State<LoginSection> {
           );
         });
     String signin = await sigIn_controller(
-        email: email.text.trim(),
-        password: password.text.trim());
-        print(signin);
-    if (signin == "1") {
-      _pass_err = "Value Can\'t Be Empty";
-      navigatorKey.currentState!
-          .popUntil((route) => route.isFirst);
-    } else if (signin == "0") {
-      _email_err = "Value Can\'t Be Empty";
-      navigatorKey.currentState!
-          .popUntil((route) => route.isFirst);
-    } else if (signin == "01") {
-      _pass_err = "Value Can\'t Be Empty";
-      _email_err = "Value Can\'t Be Empty";
-      navigatorKey.currentState!
-          .popUntil((route) => route.isFirst);
-    } else if (signin == "Successfully") {
+        email: email.text.trim(), password: password.text.trim());
+    if (signin == "Successfully") {
       _email_err = null;
       _pass_err = null;
       email.text = "";
       password.text = "";
-        Navigator.pushAndRemoveUntil<dynamic>(
+      Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) =>
-              TalkThrewHolderScreen(),
+          builder: (BuildContext context) => TalkThrewHolderScreen(),
         ),
-        (route) =>
-            false, //if you want to disable back feature set to false
+        (route) => false, //if you want to disable back feature set to false
       );
     } else {
       _email_err = signin;
       _pass_err = signin;
-      navigatorKey.currentState!
-          .popUntil((route) => route.isFirst);
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
 
     setState(() {
@@ -208,12 +225,11 @@ class _LoginSectionState extends State<LoginSection> {
       _pass_err;
     });
   }
-  
+
   Widget buildLoginText() {
     return Text(
-        "Login",
-        style: montserratStyle(size: 15, fontWeight: FontWeight.w700),
-      );
+      "Login",
+      style: montserratStyle(size: 15, fontWeight: FontWeight.w700),
+    );
   }
 }
-

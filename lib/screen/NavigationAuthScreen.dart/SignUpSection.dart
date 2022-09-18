@@ -6,6 +6,7 @@ import 'package:talkthrough/screen/controller/AuthScreen.dart';
 import '../../Providers/AuthScreenProvider.dart';
 import '../../Style/montserrat.dart';
 import '../../main.dart';
+import '../controller/ConstantMethods.dart';
 
 class SignUpSection extends StatefulWidget {
   @override
@@ -17,10 +18,10 @@ class _SignUpSectionState extends State<SignUpSection> {
   late AuthScreenProvider authScreen;
   TextEditingController password = TextEditingController();
   bool passwordVisible = true;
-  String? _email_err ;
-  String? _pass_err ;
+  String? _email_err;
+  String? _pass_err;
+  final _signUpFormKey = GlobalKey<FormState>();
 
-  
   @override
   void initState() {
     super.initState();
@@ -47,19 +48,24 @@ class _SignUpSectionState extends State<SignUpSection> {
         ),
       ),
       alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildTextSignUp(),
-          buildEmailField(),
-          buildPassWordField(),
-          buildSignUpButton(),
-          buildLoginButton(),
-        ],
+      child: Form(
+        key: _signUpFormKey,
+        autovalidateMode: AutovalidateMode.always,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildTextSignUp(),
+            buildEmailField(),
+            buildPassWordField(),
+            buildSignUpButton(),
+            buildLoginButton(),
+          ],
+        ),
       ),
     );
   }
-  Widget buildLoginButton(){
+
+  Widget buildLoginButton() {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -82,10 +88,22 @@ class _SignUpSectionState extends State<SignUpSection> {
       ],
     );
   }
+
   Widget buildEmailField() {
-    return TextField(
+    return TextFormField(
       controller: email,
       keyboardType: TextInputType.emailAddress,
+      validator: (str) {
+        int length = str!.length;
+        if (length == 0) return "Email can't be empty";
+        else if(!isEmail(email: str))return "Enter a Valid Email";
+      },
+      onChanged: (_){
+        _email_err=null;
+        setState(() {
+          _email_err;
+        });
+      },
       decoration: InputDecoration(
           labelText: "Email",
           hintText: "name@example.com",
@@ -106,8 +124,19 @@ class _SignUpSectionState extends State<SignUpSection> {
   }
 
   Widget buildPassWordField() {
-    return TextField(
+    return TextFormField(
       controller: password,
+      validator: (str) {
+        int length = str!.length;
+        if (length == 0) return "Password can't be empty";
+        else if(length<=8)return "Password should be of length greater then 8";
+      },
+      onChanged: (_){
+        _pass_err=null;
+        setState(() {
+          _pass_err;
+        });
+      },
       decoration: InputDecoration(
           labelText: "Password",
           errorText: _pass_err,
@@ -138,17 +167,7 @@ class _SignUpSectionState extends State<SignUpSection> {
         });
     String signin = await sigUp_controller(
         email: email.text.trim(), password: password.text.trim());
-    if (signin == "1") {
-      _pass_err = "Value Can\'t Be Empty";
-      navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    } else if (signin == "0") {
-      _email_err = "Value Can\'t Be Empty";
-      navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    } else if (signin == "01") {
-      _pass_err = "Value Can\'t Be Empty";
-      _email_err = "Value Can\'t Be Empty";
-      navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    } else if (signin == "Successfully") {
+    if (signin == "Successfully") {
       _email_err = null;
       _pass_err = null;
       email.text = "";
@@ -170,32 +189,36 @@ class _SignUpSectionState extends State<SignUpSection> {
       _pass_err;
     });
   }
-  
+
   Widget buildSignUpButton() {
     return Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            child: Container(
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  elevation: 15.0,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: Container(
+            height: 50,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
                 ),
-                onPressed: () async {
-                  signUp();
-                },
-                child: Text("Sign Up"),
+                elevation: 15.0,
               ),
+              onPressed: () async {
+                bool valid=_signUpFormKey.currentState!.validate();
+                if(valid){
+                  signUp();
+
+                }
+              },
+              child: Text("Sign Up"),
             ),
-          )
-        ],
-      );
+          ),
+        )
+      ],
+    );
   }
-  
+
   Widget buildTextSignUp() {
     return Text(
       "Sign Up",

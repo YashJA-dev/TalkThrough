@@ -37,7 +37,7 @@ class NavigationAutthScreenBody extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: AnimatedContainer(
-            height: login ? height * 0.55 : height * 0.615,
+            height: login ? height * 0.505 : height * 0.565,
             width: login ? width : width * 0.96,
             curve: Curves.easeInOut,
             decoration: BoxDecoration(
@@ -54,8 +54,10 @@ class NavigationAutthScreenBody extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: AnimatedContainer(
+            height: height * 0.52,
+            width:  width,
             alignment: Alignment(0, login ? 7 : 1.115),
-            duration: Duration(milliseconds: 300),
+            duration: Duration(milliseconds: 640),
             child: (login)?Container():SignUpSection(),
           ),
         )

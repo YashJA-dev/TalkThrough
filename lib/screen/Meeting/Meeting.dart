@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
-import 'NavigationAuthScreen.dart/NavigationAutthScreen.dart';
+import '../NavigationAuthScreen.dart/NavigationAutthScreen.dart';
 
 class Meeting extends StatelessWidget {
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/main.dart';
 
 import '../NavigationAuthScreen.dart/NavigationAutthScreen.dart';
 import 'IntroPageData.dart';
@@ -15,6 +16,7 @@ class IntroAuthScreen extends StatelessWidget {
     return IntroductionScreen(
       pages: buildPageViewModels(pageData: pageData),
       onDone: () {
+           prefs.setBool('onboarding', true);
         Navigator.pushAndRemoveUntil<dynamic>(
           context,
           MaterialPageRoute<dynamic>(
@@ -25,6 +27,7 @@ class IntroAuthScreen extends StatelessWidget {
         
       },
       onSkip: () {
+         prefs.setBool('onboarding', true);
         Navigator.pushAndRemoveUntil<dynamic>(
           context,
           MaterialPageRoute<dynamic>(

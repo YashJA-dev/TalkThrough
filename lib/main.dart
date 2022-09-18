@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.dart';
 import 'firebase_options.dart';
 import 'screen/IntroAuthScreen/IntroAuthScreen.dart';
+import 'screen/NavigationAuthScreen.dart/NavigationAutthScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +14,8 @@ void main() async {
   );
   runApp(MyApp());
 }
+
+late SharedPreferences prefs;
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -31,10 +35,45 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class NavigationPage extends StatelessWidget {
+class NavigationPage extends StatefulWidget {
+  @override
+  State<NavigationPage> createState() => _NavigationPageState();
+}
+
+class _NavigationPageState extends State<NavigationPage> {
   bool isSigned = FirebaseAuth.instance.currentUser != null;
+
   @override
   Widget build(BuildContext context) {
-    return isSigned ? TalkThrewHolderScreen() : IntroAuthScreen();
+    return FutureBuilder(
+      future: initializeSharedPrefrence(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(
+              child: Text(
+                snapshot.error.toString(),
+              ),
+            ),
+          );
+        } else if (snapshot.hasData) {
+          bool onboarding = prefs.containsKey('onboarding');
+          if (isSigned)
+            return TalkThrewHolderScreen();
+          else {
+            if (onboarding) {
+              return NavigationAutthScreen();
+            }
+          }
+          return IntroAuthScreen();
+        } else {
+          return Scaffold();
+        }
+      },
+    );
+  }
+
+  initializeSharedPrefrence() async {
+    return prefs = await SharedPreferences.getInstance();
   }
 }

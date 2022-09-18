@@ -9,11 +9,6 @@ import '../NavigationAuthScreen.dart/NavigationAutthScreen.dart';
 Future<String> sigIn_controller(
     {required String email, required String password}) async {
   String output = "Successfully";
-  if (email == "" && password == "")
-    return "01";
-  else if (email == "")
-    return "0";
-  else if (password == "") return "1";
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
@@ -26,13 +21,6 @@ Future<String> sigIn_controller(
 Future<String> sigUp_controller(
     {required String email, required String password}) async {
   String output = "Successfully";
-  if (email == "" && password == "")
-    return "01";
-  else if (email == "")
-    return "0";
-  else if (password == "")
-    return "1";
-  else if (password.length <= 7) return "PassWord length less then 8";
   try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
@@ -42,7 +30,7 @@ Future<String> sigUp_controller(
         "email": email,
         "password": password,
         "uid": signedUser.user!.uid,
-        "username": "user name",
+        "username": "Guest",
         "date": new DateTime(now.year, now.month, now.day).toString(),
         "id": Uuid().v1().substring(0, 6)
       });
