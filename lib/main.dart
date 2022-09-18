@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talkthrough/screen/Meeting/Meeting.dart';
 import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.dart';
 import 'firebase_options.dart';
 import 'screen/IntroAuthScreen/IntroAuthScreen.dart';
@@ -18,6 +19,7 @@ void main() async {
 late SharedPreferences prefs;
 
 final navigatorKey = GlobalKey<NavigatorState>();
+final meetingFormKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   @override
