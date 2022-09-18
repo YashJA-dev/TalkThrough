@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkthrough/Dialogs/SnackBar.dart';
@@ -33,9 +34,20 @@ class MeetingCodeGenerator extends StatelessWidget {
           ),
           Flexible(
             flex: 1,
-            child: AutoSizeText(
-              profileInfoProvider.id,
-              style: jost(size: height * 0.05, color: Colors.white),
+            child: GestureDetector(
+              onLongPress: () {
+                FlutterClipboard.copy(profileInfoProvider.id).then(
+                  (value) {
+                    showSnackMsg(
+                        context: buildcontext,
+                        msg: "Meeting Code ${profileInfoProvider.id} Copied To ClipBoard");
+                  },
+                );
+              },
+              child: AutoSizeText(
+                profileInfoProvider.id,
+                style: jost(size: height * 0.05, color: Colors.white),
+              ),
             ),
           ),
           Align(
@@ -53,7 +65,7 @@ class MeetingCodeGenerator extends StatelessWidget {
                     context: buildcontext,
                     builder: (context) {
                       _dialogContext = context;
-                      return LoadingDialog(width: width,height:height);
+                      return LoadingDialog(width: width, height: height);
                     },
                   );
                   bool response = await profileInfoProvider.setid(code);
@@ -61,7 +73,9 @@ class MeetingCodeGenerator extends StatelessWidget {
                   if (response) {
                     showSnackMsg(msg: "Updated", context: buildcontext);
                   } else {
-                    showSnackMsg(msg: "Network Problem Try Again:(", context: buildcontext);
+                    showSnackMsg(
+                        msg: "Network Problem Try Again:(",
+                        context: buildcontext);
                   }
                 },
                 style: ButtonStyle(
