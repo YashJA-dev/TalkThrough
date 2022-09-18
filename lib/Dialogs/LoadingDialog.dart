@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Style/montserrat.dart';
+import '../Style/GoogleStyle.dart';
 
 class LoadingDialog extends StatelessWidget {
   double width;

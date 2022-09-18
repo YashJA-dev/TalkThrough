@@ -5,7 +5,7 @@ import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
 import 'package:talkthrough/screen/Profile/Profile.dart';
 import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
-import '../Style/montserrat.dart';
+import '../Style/GoogleStyle.dart';
 import 'SnackBar.dart';
 
 Future<void> editDialog({
@@ -73,9 +73,10 @@ Future<void> editDialog({
                 bool response = await updateUserName(userName: controller.text);
                 if (response) {
                   profileInfoProvider.setusername = controller.text;
-                  showSnackMsg(context: buildcontext,msg: "Updated..");
+                  showSnackMsg(context: buildcontext, msg: "Updated..");
                 } else {
-                  showSnackMsg(context: buildcontext,msg: "Network Problem Try Again");
+                  showSnackMsg(
+                      context: buildcontext, msg: "Network Problem Try Again");
                 }
                 Navigator.pop(dialogContext!);
               }

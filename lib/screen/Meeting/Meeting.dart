@@ -5,8 +5,9 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:talkthrough/Providers/MeetingProvider.dart';
 import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
-import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/Style/GoogleStyle.dart';
 import 'package:talkthrough/main.dart';
+import 'package:talkthrough/screen/Meeting/ChangeUserTextWidget.dart';
 import 'package:talkthrough/screen/Meeting/MeetingJoinInfoWidget.dart';
 import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
@@ -26,6 +27,7 @@ class _MeetingState extends State<Meeting> {
     super.initState();
   }
 
+  TextEditingController meetingCode = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -34,7 +36,6 @@ class _MeetingState extends State<Meeting> {
         (MediaQuery.of(context).size.height - AppBar().preferredSize.height) -
             20;
     double width = MediaQuery.of(context).size.width - 20;
-    TextEditingController meetingCode = TextEditingController();
     return ChangeNotifierProvider(
       create: (_) => _meetingProvider,
       child: Column(
@@ -72,6 +73,7 @@ class _MeetingState extends State<Meeting> {
                     appContext: context,
                     length: 6,
                     obscureText: false,
+                    controller: meetingCode,
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
                         shape: PinCodeFieldShape.box,
@@ -89,8 +91,9 @@ class _MeetingState extends State<Meeting> {
                     autovalidateMode: AutovalidateMode.disabled,
                     validator: (code) {
                       int length = code!.length;
-                      if (length > 0 && length < 6)
+                      if (length > 0 && length < 6) {
                         return "Code shuld of length Greater Then 6";
+                      }
                     },
                     onChanged: (code) {
                       _meetingProvider.setMeetingcode = code;
@@ -100,36 +103,23 @@ class _MeetingState extends State<Meeting> {
                 SizedBox(
                   height: height * 0.01,
                 ),
-                Container(
-                  width: width,
-                  height: height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1),
-                    color: Colors.white10,
-                  ),
-                  padding: EdgeInsets.all(8),
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(
-                      "Click on Profile To Change your UserName",
-                      style: jost(
-                        size: height * 0.005,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                        italic: true,
-                      ),
-                    ),
-                  ),
-                ),
+                ChangeUserTextWidget(),
                 SizedBox(
                   height: height * 0.01,
                 ),
-                MeetingJoinInfoWidget(),
+                MeetingJoinInfoWidget(resetPinCode: resetPinCode),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  void resetPinCode() {
+    meetingCode.clear();
+    setState(() {
+      meetingCode;
+    });
   }
 }

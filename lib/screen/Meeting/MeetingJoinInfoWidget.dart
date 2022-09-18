@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:talkthrough/Dialogs/LoadingDialog.dart';
+import 'package:talkthrough/Dialogs/SnackBar.dart';
 import 'package:talkthrough/Providers/MeetingProvider.dart';
-import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
+import 'package:talkthrough/Style/GoogleStyle.dart';
 import 'package:talkthrough/main.dart';
+import 'package:talkthrough/screen/controller/JoinMeeting.dart';
+
+import '../controller/AuthScreen.dart';
 
 class MeetingJoinInfoWidget extends StatelessWidget {
+  Function resetPinCode;
+  MeetingJoinInfoWidget({required this.resetPinCode});
   @override
   Widget build(BuildContext context) {
     MeetingProvider meetingProvider = Provider.of<MeetingProvider>(context);
+    ProfileInfoProvider profileInfoProvider =
+        Provider.of<ProfileInfoProvider>(context);
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width - 20;
     return Column(
@@ -67,9 +78,33 @@ class MeetingJoinInfoWidget extends StatelessWidget {
                   thickness: 2,
                 ),
                 InkWell(
-                  onTap: () {
-                    // bool valid=meetingFormKey.currentState.
-                    print(meetingProvider.getMeetingcode);
+                  onTap: () async {
+                    BuildContext? _dialogcontext;
+                    int codelength = meetingProvider.meetingcode.length;
+                    if (codelength == 6) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          _dialogcontext = context;
+                          return LoadingDialog(width: width, height: height);
+                        },
+                      );
+                      bool response = await checkUserWithCode(
+                          code: meetingProvider.meetingcode);
+                      if (!response) {
+                        showSnackMsg(
+                            msg: "Please Enter a Valid Room Id",
+                            context: context);
+                      } else {
+                        await joinMeeting(
+                            meetingInfo: meetingProvider,
+                            context: context,
+                            profileInfo: profileInfoProvider);
+                      }
+                      Navigator.pop(_dialogcontext!);
+                      meetingProvider.setMeetingcode = "";
+                      resetPinCode();
+                    }
                   },
                   child: Container(
                     width: width,

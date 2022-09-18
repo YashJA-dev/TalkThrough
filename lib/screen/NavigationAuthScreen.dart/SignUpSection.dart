@@ -4,7 +4,7 @@ import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.d
 import 'package:talkthrough/screen/controller/AuthScreen.dart';
 
 import '../../Providers/AuthScreenProvider.dart';
-import '../../Style/montserrat.dart';
+import '../../Style/GoogleStyle.dart';
 import '../../main.dart';
 import '../controller/ConstantMethods.dart';
 
@@ -95,11 +95,12 @@ class _SignUpSectionState extends State<SignUpSection> {
       keyboardType: TextInputType.emailAddress,
       validator: (str) {
         int length = str!.length;
-        if (length == 0) return "Email can't be empty";
-        else if(!isEmail(email: str))return "Enter a Valid Email";
+        if (length == 0)
+          return "Email can't be empty";
+        else if (!isEmail(email: str)) return "Enter a Valid Email";
       },
-      onChanged: (_){
-        _email_err=null;
+      onChanged: (_) {
+        _email_err = null;
         setState(() {
           _email_err;
         });
@@ -128,11 +129,13 @@ class _SignUpSectionState extends State<SignUpSection> {
       controller: password,
       validator: (str) {
         int length = str!.length;
-        if (length == 0) return "Password can't be empty";
-        else if(length<=8)return "Password should be of length greater then 8";
+        if (length == 0)
+          return "Password can't be empty";
+        else if (length <= 8)
+          return "Password should be of length greater then 8";
       },
-      onChanged: (_){
-        _pass_err=null;
+      onChanged: (_) {
+        _pass_err = null;
         setState(() {
           _pass_err;
         });
@@ -205,10 +208,9 @@ class _SignUpSectionState extends State<SignUpSection> {
                 elevation: 15.0,
               ),
               onPressed: () async {
-                bool valid=_signUpFormKey.currentState!.validate();
-                if(valid){
+                bool valid = _signUpFormKey.currentState!.validate();
+                if (valid) {
                   signUp();
-
                 }
               },
               child: Text("Sign Up"),

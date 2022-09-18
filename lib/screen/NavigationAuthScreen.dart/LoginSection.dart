@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/Style/GoogleStyle.dart';
 import 'package:talkthrough/screen/TalkThrewHolderScreen/TalkThrewHolderScreen.dart';
 import 'package:talkthrough/screen/controller/ConstantMethods.dart';
 
@@ -25,14 +25,6 @@ class _LoginSectionState extends State<LoginSection> {
   AuthScreenProvider? authScreen;
   String? _email_err = null;
   String? _pass_err = null;
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   email.dispose();
-  //   // print("dispose");
-  //   password.dispose();
-  // }
 
   @override
   void initState() {
@@ -98,8 +90,7 @@ class _LoginSectionState extends State<LoginSection> {
       controller: email,
       validator: (str) {
         int length = str!.length;
-        if(length==0)return "Email can't be empty";
-        else if (!isEmail(email: str)) return "Enter a Valid Email";
+        if (!isEmail(email: str)) return "Enter a Valid Email";
       },
       keyboardType: TextInputType.emailAddress,
       onChanged: (_) {
@@ -133,9 +124,9 @@ class _LoginSectionState extends State<LoginSection> {
       controller: password,
       validator: (str) {
         int length = str!.length;
-        if (length == 0) return "Password can't be empty";
-        else if(length<=8)return "Password should be of length greater then 8";
-
+        if (length > 0 && length <= 8) {
+          return "Password should be of length greater then 8";
+        }
       },
       onChanged: (_) {
         _pass_err = null;

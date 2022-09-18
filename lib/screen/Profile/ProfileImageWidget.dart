@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
-import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/Style/GoogleStyle.dart';
 
 class ProfileImageWidget extends StatelessWidget {
   @override
@@ -15,8 +15,8 @@ class ProfileImageWidget extends StatelessWidget {
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
 
-
-    ProfileInfoProvider profileInfoProvider=Provider.of<ProfileInfoProvider>(context);
+    ProfileInfoProvider profileInfoProvider =
+        Provider.of<ProfileInfoProvider>(context);
     return Container(
       width: width,
       height: height * 0.15,
@@ -62,8 +62,8 @@ class ProfileImageWidget extends StatelessWidget {
                   width: width * 0.2,
                   child: FittedBox(
                     child: Text(
-                      
-                      DateFormat('yyyy-MM-dd').format(DateTime.parse(profileInfoProvider.date)),
+                      DateFormat('yyyy-MM-dd')
+                          .format(DateTime.parse(profileInfoProvider.date)),
                       style: jost(
                           size: height * 0.07,
                           fontWeight: FontWeight.w500,

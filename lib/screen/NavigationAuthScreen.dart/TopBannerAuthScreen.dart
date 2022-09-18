@@ -3,7 +3,7 @@ import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../Providers/AuthScreenProvider.dart';
-import '../../Style/montserrat.dart';
+import '../../Style/GoogleStyle.dart';
 
 class TopBannerAuthScreen extends StatelessWidget {
   @override
@@ -16,10 +16,10 @@ class TopBannerAuthScreen extends StatelessWidget {
     return Container(
       height: size.height,
       width: width,
-      decoration:
-          BoxDecoration(gradient: LinearGradient(colors: GradientColors.violet)),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: GradientColors.violet)),
       alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: size.height*0.20),
+      padding: EdgeInsets.only(top: size.height * 0.20),
       child: AnimatedDefaultTextStyle(
         curve: Curves.easeInOut,
         duration: Duration(milliseconds: 400),

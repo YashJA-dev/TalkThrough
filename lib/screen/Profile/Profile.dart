@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkthrough/Dialogs/EditDialog.dart';
-import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/Style/GoogleStyle.dart';
 import 'package:talkthrough/screen/Profile/MeetingCodeGenerator.dart';
+import 'package:talkthrough/screen/Profile/ProfileAppbar.dart';
 import 'package:talkthrough/screen/Profile/ProfileDetailWidget.dart';
 
 import '../../Providers/ProfileInfoProvider.dart';
@@ -27,22 +28,11 @@ class Profile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              new AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                actions: [
-                  FlatButton.icon(
-                      label: Text("Log Out"),
-                      icon: Icon(Icons.logout_rounded),
-                      textColor: Colors.white,
-                      onPressed: () {
-                        logout(context: context);
-                      }),
-                ],
-              ),
+              ProfileAppBar(),
               Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: ProfileImageWidget()),
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: ProfileImageWidget(),
+              ),
               SizedBox(
                 height: (MediaQuery.of(context).size.height -
                         MediaQuery.of(context).padding.top -
@@ -68,7 +58,11 @@ class Profile extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: FlatButton.icon(
                   onPressed: () {
-                    editDialog(buildcontext: context, title: "Enter New User Name",profileInfoProvider: profileInfo);
+                    editDialog(
+                      buildcontext: context,
+                      title: "Enter New User Name",
+                      profileInfoProvider: profileInfo,
+                    );
                   },
                   icon: Icon(Icons.edit),
                   label: Text("Edit User Name"),

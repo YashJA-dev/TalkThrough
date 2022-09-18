@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:provider/provider.dart';
-import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/Style/GoogleStyle.dart';
 import 'package:talkthrough/screen/NavigationAuthScreen.dart/TopBannerAuthScreen.dart';
 
 import '../../Providers/AuthScreenProvider.dart';
@@ -24,11 +24,11 @@ class NavigationAutthScreenBody extends StatelessWidget {
   bool login = true;
   @override
   Widget build(BuildContext context) {
-    var mediaquery=MediaQuery.of(context);
+    var mediaquery = MediaQuery.of(context);
     Size size = mediaquery.size;
     double width = size.width;
     double height = size.height;
-    bool keyboard=mediaquery.viewInsets.bottom!=0;
+    bool keyboard = mediaquery.viewInsets.bottom != 0;
     AuthScreenProvider authScreen = Provider.of<AuthScreenProvider>(context);
     login = authScreen.login;
     return Stack(
@@ -55,10 +55,10 @@ class NavigationAutthScreenBody extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: AnimatedContainer(
             height: height * 0.52,
-            width:  width,
+            width: width,
             alignment: Alignment(0, login ? 7 : 1.115),
             duration: Duration(milliseconds: 640),
-            child: (login)?Container():SignUpSection(),
+            child: (login) ? Container() : SignUpSection(),
           ),
         )
       ],

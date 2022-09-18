@@ -44,27 +44,41 @@ Future<String> sigUp_controller(
 
 Future<DocumentSnapshot<Object?>> userData() async {
   final user = FirebaseAuth.instance.currentUser;
+
   return await userCollection.doc(user!.uid).get();
 }
 
-Future<bool> updateId({required String code}) async{
-  try{
+Future<bool> checkUserWithCode({required String code}) async {
+  final user = FirebaseAuth.instance.currentUser;
+  var docSnapshots = await userCollection.get();
+
+  for (var snapshot in docSnapshots.docs) {
+    var doc = snapshot.data() as Map;
+    if (doc["id"] == code) return true;
+  }
+  return false;
+}
+
+Future<bool> updateId({required String code}) async {
+  try {
     final user = FirebaseAuth.instance.currentUser;
     await userCollection.doc(user!.uid).update({'id': code});
-  }on FirebaseException catch(ex){
+  } on FirebaseException catch (ex) {
     return false;
   }
   return true;
 }
-Future<bool> updateUserName({required String userName}) async{
-  try{
+
+Future<bool> updateUserName({required String userName}) async {
+  try {
     final user = FirebaseAuth.instance.currentUser;
     await userCollection.doc(user!.uid).update({'username': userName});
-  }on FirebaseException catch(ex){
+  } on FirebaseException catch (ex) {
     return false;
   }
   return true;
 }
+
 void logout({required BuildContext context}) {
   FirebaseAuth.instance.signOut();
   Navigator.pushAndRemoveUntil<dynamic>(

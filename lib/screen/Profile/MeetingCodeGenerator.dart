@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkthrough/Dialogs/SnackBar.dart';
 import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
-import 'package:talkthrough/Style/montserrat.dart';
+import 'package:talkthrough/Style/GoogleStyle.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../Dialogs/LoadingDialog.dart';
@@ -40,7 +40,8 @@ class MeetingCodeGenerator extends StatelessWidget {
                   (value) {
                     showSnackMsg(
                         context: buildcontext,
-                        msg: "Meeting Code ${profileInfoProvider.id} Copied To ClipBoard");
+                        msg:
+                            "Meeting Code ${profileInfoProvider.id} Copied To ClipBoard");
                   },
                 );
               },
