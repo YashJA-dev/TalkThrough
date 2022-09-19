@@ -7,6 +7,7 @@ import 'package:talkthrough/Style/GoogleStyle.dart';
 import 'package:talkthrough/screen/Profile/MeetingCodeGenerator.dart';
 import 'package:talkthrough/screen/Profile/ProfileAppbar.dart';
 import 'package:talkthrough/screen/Profile/ProfileDetailWidget.dart';
+import 'package:talkthrough/screen/Profile/meetingRoomStatusWidget.dart';
 
 import '../../Providers/ProfileInfoProvider.dart';
 import '../NavigationAuthScreen.dart/NavigationAutthScreen.dart';
@@ -20,6 +21,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     ProfileInfoProvider profileInfo = Provider.of<ProfileInfoProvider>(context);
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width - 20;
     return Container(
         decoration: BoxDecoration(color: Colors.indigo),
         // appBar:
@@ -70,14 +72,20 @@ class Profile extends StatelessWidget {
                 ),
               ),
               ProfileDetailWidget(),
-              Flexible(
-                flex: 1,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                  child: MeetingCodeGenerator(),
-                ),
+              // Flexible(
+              //   flex: 1,
+              // child:
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              //   child:
+              Container(
+                height: height * 0.2,
+                width: width,
+                child: MeetingCodeGenerator(),
               ),
+              // ),
+              // ),
+              MeetingRoomStatusWidget(),
             ],
           ),
         ));

@@ -6,7 +6,7 @@ class ProfileInfoProvider extends ChangeNotifier {
   String _id;
   String _email;
   String _date;
-
+  bool _meetingRunning = false;
   ProfileInfoProvider({
     required String username,
     required String id,
@@ -16,6 +16,12 @@ class ProfileInfoProvider extends ChangeNotifier {
         _id = id,
         _email = email,
         _date = date;
+  bool get meetingRunning => this._meetingRunning;
+
+  set meetingRunning(bool value) {
+    this._meetingRunning = value;
+    notifyListeners();
+  }
 
   get email => this._email;
   String get username => this._username;
@@ -27,16 +33,16 @@ class ProfileInfoProvider extends ChangeNotifier {
 
   set setusername(String value) {
     this._username = value;
-    
+
     notifyListeners();
   }
 
   get id => this._id;
 
-  Future<bool> setid(code) async{
+  Future<bool> setid(code) async {
     this._id = code;
-    bool response=await updateId(code: code);   
-    if(response)notifyListeners();
+    bool response = await updateId(code: code);
+    if (response) notifyListeners();
     return response;
   }
 
