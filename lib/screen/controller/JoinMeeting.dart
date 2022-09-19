@@ -17,7 +17,12 @@ joinMeeting(
   try {
     Map<FeatureFlagEnum, bool> featureFlag = {
       FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
+      FeatureFlagEnum.MEETING_PASSWORD_ENABLED:true,
+      FeatureFlagEnum.MEETING_NAME_ENABLED:true,
+      FeatureFlagEnum.RECORDING_ENABLED:true,
+
     };
+    
     if (Platform.isAndroid) {
       featureFlag[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
     } else if (Platform.isIOS) {
@@ -28,9 +33,14 @@ joinMeeting(
       ..audioMuted = meetingInfo.isMicOn
       ..userDisplayName = profileInfo.username
       ..videoMuted = meetingInfo.isVideoOn
+      ..userEmail=profileInfo.email
       ..featureFlags.addAll(featureFlag);
-
-    await JitsiMeet.joinMeeting(options);
+      
+      
+    await JitsiMeet.joinMeeting(options).whenComplete((){
+      // print("joined meeting kapp");
+    });
+    
   } catch (ex) {
     showSnackMsg(msg: ex.toString(), context: context);
   }

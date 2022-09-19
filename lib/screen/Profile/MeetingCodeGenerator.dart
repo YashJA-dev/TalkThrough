@@ -26,10 +26,13 @@ class MeetingCodeGenerator extends StatelessWidget {
         children: [
           SizedBox(
             width: width,
-            height: height * 0.035,
-            child: AutoSizeText(
-              "${profileInfoProvider.username}'s Meeting Code",
-              style: jost(size: height * 0.035, color: Colors.white70),
+            height: height * 0.04,
+            child: FittedBox(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "${profileInfoProvider.username}'s Meeting Code",
+                style: jost(size: height * 0.035, color: Colors.white70),
+              ),
             ),
           ),
           Flexible(

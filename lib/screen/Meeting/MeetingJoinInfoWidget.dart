@@ -10,9 +10,34 @@ import 'package:talkthrough/screen/controller/JoinMeeting.dart';
 
 import '../controller/AuthScreen.dart';
 
-class MeetingJoinInfoWidget extends StatelessWidget {
+class MeetingJoinInfoWidget extends StatefulWidget {
   Function resetPinCode;
   MeetingJoinInfoWidget({required this.resetPinCode});
+
+  @override
+  State<MeetingJoinInfoWidget> createState() => _MeetingJoinInfoWidgetState();
+}
+
+class _MeetingJoinInfoWidgetState extends State<MeetingJoinInfoWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    // print("joined meeting kapp");
+    super.initState();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+  //  print("joined meeting kapp");
+    super.dispose();
+  }
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+  //  print("joined meeting kapp 2");
+    
+    super.deactivate();
+  }
   @override
   Widget build(BuildContext context) {
     MeetingProvider meetingProvider = Provider.of<MeetingProvider>(context);
@@ -21,6 +46,7 @@ class MeetingJoinInfoWidget extends StatelessWidget {
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width - 20;
+    
     return Column(
       children: [
         SizedBox(
@@ -103,7 +129,7 @@ class MeetingJoinInfoWidget extends StatelessWidget {
                       }
                       Navigator.pop(_dialogcontext!);
                       meetingProvider.setMeetingcode = "";
-                      resetPinCode();
+                      widget.resetPinCode();
                     }
                   },
                   child: Container(

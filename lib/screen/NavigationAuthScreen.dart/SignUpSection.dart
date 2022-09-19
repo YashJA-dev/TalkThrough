@@ -17,6 +17,7 @@ class _SignUpSectionState extends State<SignUpSection> {
   TextEditingController email = TextEditingController();
   late AuthScreenProvider authScreen;
   TextEditingController password = TextEditingController();
+  var username = TextEditingController();
   bool passwordVisible = true;
   String? _email_err;
   String? _pass_err;
@@ -36,10 +37,11 @@ class _SignUpSectionState extends State<SignUpSection> {
     Size size = MediaQuery.of(context).size;
     bool login = authScreen.login;
     double height = size.height * 0.6;
+    double width = size.width - 32;
     return Container(
       height: height,
       width: size.width,
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 80, top: 2),
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -56,6 +58,7 @@ class _SignUpSectionState extends State<SignUpSection> {
           children: [
             buildTextSignUp(),
             buildEmailField(),
+            buildUserNameField(),
             buildPassWordField(),
             buildSignUpButton(),
             buildLoginButton(),
@@ -95,9 +98,7 @@ class _SignUpSectionState extends State<SignUpSection> {
       keyboardType: TextInputType.emailAddress,
       validator: (str) {
         int length = str!.length;
-        if (length == 0)
-          return "Email can't be empty";
-        else if (!isEmail(email: str)) return "Enter a Valid Email";
+        if (!isEmail(email: str)&&length>0) return "Enter a Valid Email";
       },
       onChanged: (_) {
         _email_err = null;
@@ -124,14 +125,31 @@ class _SignUpSectionState extends State<SignUpSection> {
     );
   }
 
+  Widget buildUserNameField() {
+    return TextFormField(
+      controller: username,
+      keyboardType: TextInputType.emailAddress,
+      validator: (str) {
+        int length = (str!.trim()).length;
+        if (length < 4) return "User Name Character's must be greater then 3";
+      },
+      maxLength: 15,
+
+      decoration: InputDecoration(
+          labelText: "User Name",
+          hintText: "Guest",
+          prefixIcon: Icon(Icons.supervised_user_circle),
+          border: OutlineInputBorder()),
+    );
+  }
+
   Widget buildPassWordField() {
     return TextFormField(
       controller: password,
       validator: (str) {
         int length = str!.length;
-        if (length == 0)
-          return "Password can't be empty";
-        else if (length <= 8)
+        
+        if (length <= 8&&length>0)
           return "Password should be of length greater then 8";
       },
       onChanged: (_) {
@@ -143,6 +161,7 @@ class _SignUpSectionState extends State<SignUpSection> {
       decoration: InputDecoration(
           labelText: "Password",
           errorText: _pass_err,
+          
           suffixIcon: IconButton(
             icon:
                 Icon(passwordVisible ? Icons.visibility_off : Icons.visibility),
@@ -169,12 +188,13 @@ class _SignUpSectionState extends State<SignUpSection> {
           );
         });
     String signin = await sigUp_controller(
-        email: email.text.trim(), password: password.text.trim());
+        email: email.text.trim(), password: password.text.trim(),username:username.text);
     if (signin == "Successfully") {
       _email_err = null;
       _pass_err = null;
       email.text = "";
       password.text = "";
+      username.text="";
       Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
@@ -223,7 +243,7 @@ class _SignUpSectionState extends State<SignUpSection> {
 
   Widget buildTextSignUp() {
     return Text(
-      "Sign Up",
+      "Sign Up / Create New Account",
       style: montserratStyle(size: 15, fontWeight: FontWeight.w700),
     );
   }

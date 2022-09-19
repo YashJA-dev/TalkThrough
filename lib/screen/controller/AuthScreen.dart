@@ -19,7 +19,7 @@ Future<String> sigIn_controller(
 }
 
 Future<String> sigUp_controller(
-    {required String email, required String password}) async {
+    {required String email, required String password,required String username}) async {
   String output = "Successfully";
   try {
     await FirebaseAuth.instance
@@ -30,9 +30,10 @@ Future<String> sigUp_controller(
         "email": email,
         "password": password,
         "uid": signedUser.user!.uid,
-        "username": "Guest",
+        "username": username,
         "date": new DateTime(now.year, now.month, now.day).toString(),
-        "id": Uuid().v1().substring(0, 6)
+        "id": Uuid().v1().substring(0, 6),
+        "meeting":false,
       });
     });
     // .then((signed)
@@ -51,7 +52,7 @@ Future<DocumentSnapshot<Object?>> userData() async {
 Future<bool> checkUserWithCode({required String code}) async {
   final user = FirebaseAuth.instance.currentUser;
   var docSnapshots = await userCollection.get();
-
+  // await setMeeting(meeting: true);
   for (var snapshot in docSnapshots.docs) {
     var doc = snapshot.data() as Map;
     if (doc["id"] == code) return true;
@@ -73,6 +74,15 @@ Future<bool> updateUserName({required String userName}) async {
   try {
     final user = FirebaseAuth.instance.currentUser;
     await userCollection.doc(user!.uid).update({'username': userName});
+  } on FirebaseException catch (ex) {
+    return false;
+  }
+  return true;
+}
+Future<bool> setMeeting({required bool meeting}) async {
+  try {
+    final user = FirebaseAuth.instance.currentUser;
+    await userCollection.doc(user!.uid).update({'meeting': meeting});
   } on FirebaseException catch (ex) {
     return false;
   }

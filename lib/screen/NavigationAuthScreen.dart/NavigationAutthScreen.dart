@@ -54,9 +54,9 @@ class NavigationAutthScreenBody extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: AnimatedContainer(
-            height: height * 0.52,
+            height: height * 0.535,
             width: width,
-            alignment: Alignment(0, login ? 7 : 1.115),
+            // alignment: Alignment(2,  0),
             duration: Duration(milliseconds: 640),
             child: (login) ? Container() : SignUpSection(),
           ),

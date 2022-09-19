@@ -90,7 +90,7 @@ class _LoginSectionState extends State<LoginSection> {
       controller: email,
       validator: (str) {
         int length = str!.length;
-        if (!isEmail(email: str)) return "Enter a Valid Email";
+        if (!isEmail(email: str)&&length>0) return "Enter a Valid Email";
       },
       keyboardType: TextInputType.emailAddress,
       onChanged: (_) {
