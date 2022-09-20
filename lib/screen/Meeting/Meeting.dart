@@ -43,7 +43,7 @@ class _MeetingState extends State<Meeting> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           AppBar(
-            title: Text("TalkThrew Room"),
+            title: Text("TalkThrough Room"),
             centerTitle: true,
           ),
           Padding(

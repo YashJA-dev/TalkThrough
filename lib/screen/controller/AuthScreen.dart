@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:talkthrough/Providers/ProfileInfoProvider.dart';
 import 'package:talkthrough/screen/controller/FirebaseConst.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,7 +21,9 @@ Future<String> sigIn_controller(
 }
 
 Future<String> sigUp_controller(
-    {required String email, required String password,required String username}) async {
+    {required String email,
+    required String password,
+    required String username}) async {
   String output = "Successfully";
   try {
     await FirebaseAuth.instance
@@ -33,7 +37,7 @@ Future<String> sigUp_controller(
         "username": username,
         "date": new DateTime(now.year, now.month, now.day).toString(),
         "id": Uuid().v1().substring(0, 6),
-        "meeting":false,
+        "meeting": false,
       });
     });
     // .then((signed)
@@ -49,13 +53,21 @@ Future<DocumentSnapshot<Object?>> userData() async {
   return await userCollection.doc(user!.uid).get();
 }
 
-Future<bool> checkUserWithCode({required String code}) async {
+Future<bool> checkUserWithCode(
+    {required String code,
+    required ProfileInfoProvider profileInfoProvider}) async {
   final user = FirebaseAuth.instance.currentUser;
   var docSnapshots = await userCollection.get();
   // await setMeeting(meeting: true);
   for (var snapshot in docSnapshots.docs) {
     var doc = snapshot.data() as Map;
-    if (doc["id"] == code) return true;
+    if (doc["id"] == code) {
+      if (doc["meeting"] == true) {
+        return true;
+      } else {
+        return await profileInfoProvider.SetmeetingStatus(true);
+      }
+    }
   }
   return false;
 }
@@ -79,7 +91,8 @@ Future<bool> updateUserName({required String userName}) async {
   }
   return true;
 }
-Future<bool> setMeeting({required bool meeting}) async {
+
+Future<bool> updateMeetigStatusFireStore({required bool meeting}) async {
   try {
     final user = FirebaseAuth.instance.currentUser;
     await userCollection.doc(user!.uid).update({'meeting': meeting});

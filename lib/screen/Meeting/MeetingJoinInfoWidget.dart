@@ -25,19 +25,22 @@ class _MeetingJoinInfoWidgetState extends State<MeetingJoinInfoWidget> {
     // print("joined meeting kapp");
     super.initState();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
-  //  print("joined meeting kapp");
+    //  print("joined meeting kapp");
     super.dispose();
   }
+
   @override
   void deactivate() {
     // TODO: implement deactivate
-  //  print("joined meeting kapp 2");
-    
+    //  print("joined meeting kapp 2");
+
     super.deactivate();
   }
+
   @override
   Widget build(BuildContext context) {
     MeetingProvider meetingProvider = Provider.of<MeetingProvider>(context);
@@ -46,7 +49,7 @@ class _MeetingJoinInfoWidgetState extends State<MeetingJoinInfoWidget> {
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width - 20;
-    
+
     return Column(
       children: [
         SizedBox(
@@ -116,7 +119,8 @@ class _MeetingJoinInfoWidgetState extends State<MeetingJoinInfoWidget> {
                         },
                       );
                       bool response = await checkUserWithCode(
-                          code: meetingProvider.meetingcode);
+                          code: meetingProvider.meetingcode,
+                          profileInfoProvider: profileInfoProvider);
                       if (!response) {
                         showSnackMsg(
                             msg: "Please Enter a Valid Room Id",

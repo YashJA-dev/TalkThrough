@@ -18,9 +18,14 @@ class ProfileInfoProvider extends ChangeNotifier {
         _date = date;
   bool get meetingRunning => this._meetingRunning;
 
-  set meetingRunning(bool value) {
-    this._meetingRunning = value;
-    notifyListeners();
+  Future<bool> SetmeetingStatus(bool value) async {
+    bool response = await updateMeetigStatusFireStore(meeting: value);
+    if (response) {
+      this._meetingRunning = value;
+      notifyListeners();
+      return true;
+    }
+    return false;
   }
 
   get email => this._email;
